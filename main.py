@@ -692,7 +692,6 @@ if __name__ == "__main__":
             print("++++ NOT USING LR SCALING ++++")
             print(f"Setting learning rate to {model.learning_rate:.2e}")
 
-
         # allow checkpointing via USR1
         def melk(*args, **kwargs):
             # run all checkpoint hooks
@@ -704,7 +703,7 @@ if __name__ == "__main__":
 
         def divein(*args, **kwargs):
             if trainer.global_rank == 0:
-                import pudb;
+                import pudb
                 pudb.set_trace()
 
 

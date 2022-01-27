@@ -544,7 +544,6 @@ class Encoder(AttentionLayers):
         super().__init__(causal=False, **kwargs)
 
 
-
 class TransformerWrapper(nn.Module):
     def __init__(
             self,
