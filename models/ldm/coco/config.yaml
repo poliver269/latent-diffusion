@@ -9,18 +9,18 @@ model:
     timesteps: 1000
     first_stage_key: image
     cond_stage_key: caption
-    image_size: 32
-    channels: 4
+    image_size: 64
+    channels: 3
     cond_stage_trainable: true
     conditioning_key: crossattn
     monitor: val/loss_simple_ema
     unet_config:
       target: ldm.modules.diffusionmodules.openaimodel.UNetModel
       params:
-        image_size: 32
-        in_channels: 4
-        out_channels: 4
-        model_channels: 256
+        image_size: 64
+        in_channels: 3
+        out_channels: 3
+        model_channels: 192
         attention_resolutions:
         - 4
         - 2
@@ -32,16 +32,16 @@ model:
         - 4
         num_head_channels: 32
         use_spatial_transformer: true
-        transformer_depth: 5
-        context_dim: 512
+        transformer_depth: 4
+        context_dim: 640
     first_stage_config:
       target: ldm.models.autoencoder.VQModelInterface
       params:
-        embed_dim: 4
-        n_embed: 16384
+        embed_dim: 3
+        n_embed: 8192
         ddconfig:
           double_z: false
-          z_channels: 4
+          z_channels: 3
           resolution: 256
           in_channels: 3
           out_ch: 3
@@ -52,8 +52,7 @@ model:
           - 2
           - 4
           num_res_blocks: 2
-          attn_resolutions:
-          - 32
+          attn_resolutions: []
           dropout: 0.0
         lossconfig:
           target: torch.nn.Identity
@@ -65,13 +64,13 @@ model:
 data:
   target: main.DataModuleFromConfig
   params:
-    batch_size: 32
-    num_workers: 6
+    batch_size: 8
+    num_workers: 2
     wrap: false
     train:
       target: ldm.data.coco.CocoImagesAndCaptionsTrain2014
       params:
-          size: 256
+          size: 296
     validation:
       target: ldm.data.coco.CocoImagesAndCaptionsValidation2014
       params:
